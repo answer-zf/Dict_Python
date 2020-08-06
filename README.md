@@ -52,6 +52,13 @@
 
 1.  网络模型
 
+    -   请求协议：
+    
+        -   注册： R name password
+        -   登陆： L name password
+        -   退出:  E
+        -   查单词:  Q name word
+
 2.  登陆注册
 
 3.  查单词
