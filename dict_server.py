@@ -76,6 +76,27 @@ def do_query(conn_fd, db, data):
         conn_fd.send(mean_msg.encode())
 
 
+def do_history(conn_fd, db, data):
+    """
+
+    :param conn_fd:
+    :param db:
+    :param data:
+    :return:
+    """
+
+    name = data.split(" ")[1]
+
+    history_msg = db.do_history(name)
+    if not history_msg:
+        conn_fd.send(b"Not Query ...")
+    else:
+        response_msg = "\nHistory List:\n\n"
+        for index, item in enumerate(history_msg):
+            response_msg += str(index + 1) + ". " + item[0] + " | "
+        conn_fd.send(response_msg.encode())
+
+
 def do_request(conn_fd, db):
     """
         处理请求
@@ -100,6 +121,8 @@ def do_request(conn_fd, db):
             do_register(conn_fd, db, request_msg)
         elif request_msg[0] == "Q":
             do_query(conn_fd, db, request_msg)
+        elif request_msg[0] == "H":
+            do_history(conn_fd, db, request_msg)
 
 
 def main():

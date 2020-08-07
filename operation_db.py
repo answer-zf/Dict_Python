@@ -126,3 +126,18 @@ class Database:
         mean = self.cursor.fetchone()
         if mean:
             return mean[0]
+
+    def do_history(self, name):
+        """
+            查询历史纪录
+        :param name: 用户名
+        :return:
+        """
+
+        select_sql = "SELECT word FROM history WHERE name=%s ORDER BY id DESC LIMIT 10;"
+
+        self.cursor.execute(select_sql, name)
+        select_msg = self.cursor.fetchall()
+
+        if select_msg:
+            return select_msg

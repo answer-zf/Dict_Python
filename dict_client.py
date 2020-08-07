@@ -38,6 +38,20 @@ def do_query(name):
         print(response_msg)
 
 
+def do_history(name):
+    """
+        查询历史纪录
+    :param name: 用户名
+    :return:
+    """
+
+    require_msg = "H " + name
+    sock_fd.send(require_msg.encode())
+
+    response_msg = sock_fd.recv(128).decode()
+    print(response_msg)
+
+
 def login(name):
     """
         登陆 / 注册成功进入二级页面
@@ -59,7 +73,7 @@ def login(name):
         if str_cmd == "1":
             do_query(name)
         elif str_cmd == "2":
-            pass
+            do_history(name)
         elif str_cmd == "3":
             print("Bye ...")
             return

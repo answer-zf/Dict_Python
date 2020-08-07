@@ -54,10 +54,11 @@
 
     -   请求协议：
     
-        -   注册： R name password
-        -   登陆： L name password
-        -   退出:  E
-        -   查单词:  Q name word
+        -   注册  ： R name password
+        -   登陆  ： L name password
+        -   退出  ： E
+        -   查单词： Q name word
+        -   查历史： H name
 
 2.  登陆注册
 
