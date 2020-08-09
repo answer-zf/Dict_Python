@@ -4,6 +4,7 @@
 
 from socket import *
 from multiprocessing import Process
+from time import sleep
 import signal
 import sys
 
@@ -57,7 +58,7 @@ def do_query(conn_fd, db, data):
         查询单词
     :param conn_fd: 连接套接字
     :param db: 数据库连接对象
-    :param data: 注册信息
+    :param data: 查询信息
     :return:
     """
 
@@ -79,22 +80,30 @@ def do_query(conn_fd, db, data):
 def do_history(conn_fd, db, data):
     """
 
-    :param conn_fd:
-    :param db:
-    :param data:
+    :param conn_fd: 连接套接字
+    :param db: 数据库连接对象
+    :param data: 用户信息
     :return:
     """
 
     name = data.split(" ")[1]
 
     history_msg = db.do_history(name)
+
     if not history_msg:
-        conn_fd.send(b"Not Query ...")
-    else:
-        response_msg = "\nHistory List:\n\n"
-        for index, item in enumerate(history_msg):
-            response_msg += str(index + 1) + ". " + item[0] + " | "
+        conn_fd.send(b"FAIL")
+        return
+
+    conn_fd.send(b"OK")
+
+    for i in history_msg:
+        # i => (name,word,time)
+        response_msg = "%s  %s  %s" % i
+        sleep(0.1)  # 防止粘包处理
         conn_fd.send(response_msg.encode())
+
+    sleep(0.1)  # 防止粘包处理
+    conn_fd.send(b"##")
 
 
 def do_request(conn_fd, db):

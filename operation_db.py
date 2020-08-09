@@ -134,10 +134,7 @@ class Database:
         :return:
         """
 
-        select_sql = "SELECT word FROM history WHERE name=%s ORDER BY id DESC LIMIT 10;"
+        select_sql = "SELECT name,word,time FROM history WHERE name=%s ORDER BY id DESC LIMIT 10;"
 
         self.cursor.execute(select_sql, name)
-        select_msg = self.cursor.fetchall()
-
-        if select_msg:
-            return select_msg
+        return self.cursor.fetchall()

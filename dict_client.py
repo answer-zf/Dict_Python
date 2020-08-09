@@ -49,7 +49,15 @@ def do_history(name):
     sock_fd.send(require_msg.encode())
 
     response_msg = sock_fd.recv(128).decode()
-    print(response_msg)
+
+    if response_msg == "OK":
+        while True:
+            data = sock_fd.recv(1024).decode()
+            if data == "##":
+                break
+            print(data)
+    else:
+        print("Not Query ...")
 
 
 def login(name):
